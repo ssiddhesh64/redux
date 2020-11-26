@@ -1,6 +1,8 @@
 const DECREMENT = "DECREMENT";
 
-// this is a function which returns an action with property type and more
+// An action is an object with a type property
+// An action creator is a function that returns a function
+// here decrement is an Action creator
 function decrement() {
   return {
     type: DECREMENT,
