@@ -1,3 +1,6 @@
+// import redux from "redux";
+const redux = require("redux");
+const createStore = redux.createStore;
 const DECREMENT = "DECREMENT";
 
 // An action is an object with a type property
@@ -27,3 +30,18 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
+
+//store is responsible for application state
+//allows access to state via getState()
+//allows state to be updated via dispatch(action)
+//registers listeners via subscribe(listener)
+//handles unregistering of listeners via function returned by subscribe(listener)
+const store = createStore(reducer);
+console.log("Initial state", store.getState());
+const unsubscibe = store.subscribe(() =>
+  console.log("Updated store", store.getState())
+);
+store.dispatch(decrement());
+store.dispatch(decrement());
+store.dispatch(decrement());
+unsubscibe();
