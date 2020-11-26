@@ -1,7 +1,11 @@
 // import redux from "redux";
 const redux = require("redux");
+const reduxThunk = require("redux-thunk").default;
+const axios = require("axios");
+
 const createStore = redux.createStore;
 const combineReducers = redux.combineReducers;
+const applyMiddleware = redux.applyMiddleware;
 const DECREMENT = "DECREMENT";
 const INCREMENT = "INCREMENT";
 
@@ -61,7 +65,6 @@ const reducer2 = (state = initialState2, action) => {
 //allows state to be updated via dispatch(action)
 //registers listeners via subscribe(listener)
 //handles unregistering of listeners via function returned by subscribe(listener)
-
 const rootReducer = combineReducers({
   dec: reducer1,
   inc: reducer2,
@@ -77,3 +80,8 @@ store.dispatch(decrement());
 store.dispatch(increment());
 store.dispatch(increment());
 unsubscibe();
+
+//middleware
+//suggested way to extend redux with custom functionality
+//provides third-party extension between dispatching an action, and the moment it reaches the reducer
+//use middleware for logging, crash reporting, performing asynchronous task, etc.
