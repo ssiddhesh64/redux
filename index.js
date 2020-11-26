@@ -1,7 +1,9 @@
 // import redux from "redux";
 const redux = require("redux");
 const createStore = redux.createStore;
+const combineReducers = redux.combineReducers;
 const DECREMENT = "DECREMENT";
+const INCREMENT = "INCREMENT";
 
 // An action is an object with a type property
 // An action creator is a function that returns a function
@@ -13,18 +15,41 @@ function decrement() {
   };
 }
 
-const initialState = {
-  counter: 10,
+function increment() {
+  return {
+    type: INCREMENT,
+    info: "this is an action object and can have other properties than type",
+  };
+}
+
+const initialState1 = {
+  counter1: 10,
+};
+
+const initialState2 = {
+  counter2: 10,
 };
 
 // a reducer is a function which takes state and an action and returns new state
 // (prevState, action) => newState
-const reducer = (state = initialState, action) => {
+const reducer1 = (state = initialState1, action) => {
   switch (action.type) {
     case DECREMENT:
       return {
         ...state,
-        counter: state.counter - 1,
+        counter1: state.counter1 - 1,
+      };
+    default:
+      return state;
+  }
+};
+
+const reducer2 = (state = initialState2, action) => {
+  switch (action.type) {
+    case INCREMENT:
+      return {
+        ...state,
+        counter2: state.counter2 + 1,
       };
     default:
       return state;
@@ -36,7 +61,12 @@ const reducer = (state = initialState, action) => {
 //allows state to be updated via dispatch(action)
 //registers listeners via subscribe(listener)
 //handles unregistering of listeners via function returned by subscribe(listener)
-const store = createStore(reducer);
+
+const rootReducer = combineReducers({
+  dec: reducer1,
+  inc: reducer2,
+});
+const store = createStore(rootReducer);
 console.log("Initial state", store.getState());
 const unsubscibe = store.subscribe(() =>
   console.log("Updated store", store.getState())
@@ -44,4 +74,6 @@ const unsubscibe = store.subscribe(() =>
 store.dispatch(decrement());
 store.dispatch(decrement());
 store.dispatch(decrement());
+store.dispatch(increment());
+store.dispatch(increment());
 unsubscibe();
