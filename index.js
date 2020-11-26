@@ -9,3 +9,21 @@ function decrement() {
     info: "this is an action object and can have other properties than type",
   };
 }
+
+const initialState = {
+  counter: 10,
+};
+
+// a reducer is a function which takes state and an action and returns new state
+// (prevState, action) => newState
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case DECREMENT:
+      return {
+        ...state,
+        counter: state.counter - 1,
+      };
+    default:
+      return state;
+  }
+};
